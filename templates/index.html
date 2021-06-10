@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>Interactive Visualisation Application</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+    <header>
+        <h1 class="title">Interactive Visualisation Application</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/sources">Sources</a></li>
+                <li><a href="/example">Example</a></li>
+                <li><a href="/newsample">Upload</a></li>
+                <li><a href="/upload">New sample</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section class="home-back">
+        <h1>Representing Data With The Help Of Visulisations</h1>
+    </section>
+
+    <div class="container">
+        <section class="home-about">
+            <div class="home-about-box">
+                <h1>About Our Product</h1>
+                <p>
+                    Welcome to the prototype of the DBL Project of group 29.
+                    <br/><br/> This prototype was made by the following students:
+                    <br/><br/>
+                    <ul>
+                        <li>*Zdravko Petrov - ID: 1554999</li>
+                        <li>*Rafael Roane - ID: 1573578</li>
+                        <li>*Enting Jin - ID: 1586564</li>
+                        <li>*Andrei Gherghe - ID: 1554522</li>
+                        <li>*Imran Makan - ID: 1577735</li>
+                        <li>*Luca van der Wijngaart - ID: 1565923</li>
+                    </ul>
+
+                </p>
+            </div>
+        </section>
+    </div>
+
+    <section class="visualisations">
+        <h1>Use Our Product</h1>
+
+        <figure class="vis-img">
+            <img src="./static/images/vis1.png" alt="vis1" />
+            <figcaption class="vis-desk">
+                <a href="/example" class="button button-accent">Example</a>
+            </figcaption>
+        </figure>
+
+        <figure>
+            <img src="./static/images/vis1.png" alt="vis2" />
+            <figcaption class="vis-desk">
+                <a href="/upload" class="button button-accent">Upload Your Own Data Set</a>
+            </figcaption>
+        </figure>
+    </section>
+
+    <footer>
+        <div>
+            <p class="foot-par">
+                <strong>GO TO</strong>
+            </p>
+        </div>
+        <div>
+            <ul class="foot-list">
+                <li><a href="/about">About</a></li>
+                <li><a href="/sources">Sources</a></li>
+                <li><a href="/">Top</a></li>
+            </ul>
+        </div>
+    </footer>
+</body>
+
+</html>

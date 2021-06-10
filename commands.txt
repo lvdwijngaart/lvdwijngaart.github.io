@@ -1,0 +1,9 @@
+python.exe -m venv DBL
+
+pip install wheel
+
+pip install -r requirements.txt
+
+set FLASK_APP=app
+set FLASK_ENV=development
+flask run

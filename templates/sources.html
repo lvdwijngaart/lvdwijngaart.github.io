@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>Interactive Visualisation Application</title>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/styles/monokai.min.css">
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.0.0/build/highlight.min.js"></script>
+    <!-- and it's easy to individually load additional languages -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.0.0/languages/go.min.js"></script>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet" />
+    <script>
+        hljs.highlightAll();
+
+        function openTab(evt, tabName) {
+            // Declare all variables
+            var i, tabcontent, tablinks;
+
+            // Get all elements with class="tabcontent" and hide them
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            // Get all elements with class="tablinks" and remove the class "active"
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            // Show the current tab, and add an "active" class to the button that opened the tab
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+    </script>
+    <style>
+        /* Style the tab */
+        
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+        }
+        /* Style the buttons inside the tab */
+        
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 17px;
+        }
+        /* Change background color of buttons on hover */
+        
+        .tab button:hover {
+            background-color: #ddd;
+        }
+        /* Create an active/current tablink class */
+        
+        .tab button.active {
+            background-color: #ccc;
+        }
+        /* Style the tab content */
+        
+        .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            -webkit-animation: fadeEffect 1s;
+            animation: fadeEffect 1s;
+        }
+        /* Fade in tabs */
+        
+        @-webkit-keyframes fadeEffect {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes fadeEffect {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        /* Style the close button */
+        
+        .topright {
+            float: right;
+            cursor: pointer;
+            font-size: 28px;
+        }
+        
+        .topright:hover {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1 class="title">Interactive Visualisation Application</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/sources">Sources</a></li>
+                <li><a href="/example">Example</a></li>
+                <li><a href="/newsample">New sample</a></li>
+                <li><a href="/upload">Upload</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="home-back">
+        <h1>Sources And Code</h1>
+    </section>
+
+    <div class="container">
+        
+        <section class="source-about">
+            <div class="source-about-box">
+                <h1 >GitHub Link For The Source Code</h1>
+                <a class="source-box" href="https://github.com/lvdwijngaart/lvdwijngaart.github.io">Visit Our Source Code</a>
+                <p>
+                    This page contains the source code for the Visualizations and the link to GitHub, which has all the code used in this project.
+                </p>
+            </div>
+    </div>
+
+
+
+    <div style="margin: 0 5%;">
+        <h3>Python Code Used For Visualizations</h3>
+
+        <br/><br/>
+
+        <!-- Tab links -->
+        <div class="tab">
+            <button class="tablinks" onclick="openTab(event, 'FirstVisualisation')">First Visualisation</button>
+            <button class="tablinks" onclick="openTab(event, 'SecondVisualisation')">Second Visualisation</button>
+        </div>
+
+        <!-- Tab content -->
+        <div id="FirstVisualisation" class="tabcontent">
+            <span onclick="this.parentElement.style.display='none'" class="topright">&times</span>
+            <pre>
+            <code class="language-python">
+              #libraries
+              from networkx.algorithms import community
+              from bokeh.models import BoxSelectTool
+              from bokeh.io import curdoc
+              from bokeh.resources import CDN, INLINE
+              from bokeh.themes import Theme
+              
+          
+              import math
+              import pandas as pd
+              import networkx as nx
+              import matplotlib.pyplot as plt
+              import seaborn as sns
+              import csv
+              import numpy as np
+              from bokeh.io import output_file, show
+              from bokeh.layouts import gridplot, column,row
+              from bokeh.plotting import figure, show
+              from bokeh.models import ColumnDataSource, Slider, GraphRenderer, Ellipse, MultiLine, Range1d
+              from bokeh.palettes import Spectral6, Spectral8, Viridis8
+              from bokeh.transform import factor_cmap
+              from scipy.interpolate import interp1d
+              from scipy.ndimage.filters import gaussian_filter1d
+              from scipy import stats
+              from bokeh.io import curdoc
+              from bokeh.models import (BoxZoomTool, Circle, HoverTool,
+                                      MultiLine, Plot, Range1d, ResetTool,TapTool,NodesAndLinkedEdges, BoxSelectTool,EdgesAndLinkedNodes, WheelZoomTool, ResetTool)
+              from bokeh.palettes import Spectral4, Paired8
+              from bokeh.plotting import from_networkx
+              from networkx.algorithms import community
+              from bokeh.io import output_notebook, show, save
+              from networkx.algorithms.community import greedy_modularity_communities
+              output_notebook()
+          
+              #visualizations
+          
+              #reading
+              df_enron = pd.read_csv("enron-v1.csv") 
+          
+              #1st vis
+          
+              Graphtype = nx.Graph()
+              G = nx.from_pandas_edgelist(df_enron, source = 'fromId', target ='toId', create_using=Graphtype, edge_attr = 'sentiment', edge_key = 'sentiment')
+          
+          
+              degrees = dict(nx.degree(G))
+              nx.set_node_attributes(G, name='degree', values=degrees)
+              number_to_adjust_by = 5
+              adjusted_node_size = dict([(node, degree+number_to_adjust_by) for node, degree in nx.degree(G)])
+              nx.set_node_attributes(G, name='adjusted_node_size', values=adjusted_node_size)
+              nx.set_node_attributes(G, name ='Sentiment', values = df_enron['sentiment'])
+              nx.set_node_attributes(G, name = 'Email', values = df_enron['fromEmail'])
+              nx.set_node_attributes(G, name = 'Title', values = df_enron['fromJobtitle'])
+              communities = community.greedy_modularity_communities(G)
+              GOOD_SENTIMENT, BAD_SENTIMENT , NEUTRAL= "cyan", "red","#C0C0C0"
+          
+              edge_attrs = {}
+          
+              for start_node, end_node , _  in G.edges(data=True):
+                  edge_color = GOOD_SENTIMENT if G.nodes[start_node]['Sentiment'] > 0 and G.nodes[end_node]['Sentiment'] > 0 else  BAD_SENTIMENT
+                  edge_attrs[(start_node, end_node)] = edge_color
+                  if G.nodes[start_node]['Sentiment'] == 0 and G.nodes[end_node]['Sentiment'] == 0 : edge_color = NEUTRAL
+                  edge_attrs[(start_node, end_node)] = edge_color
+          
+          
+              nx.set_edge_attributes(G, edge_attrs, "edge_color")
+          
+              modularity_class = {}
+              modularity_color = {}
+              for community_number, community in enumerate(communities):
+                  for name in community: 
+                      modularity_class[name] = community_number
+                      modularity_color[name] = Paired8[community_number]
+          
+              nx.set_node_attributes(G, modularity_class, 'modularity_class')
+              nx.set_node_attributes(G, modularity_color, 'modularity_color')
+          
+          
+              size_by_this_attribute = 'adjusted_node_size'
+              color_by_this_attribute = 'modularity_color'
+              color_palette = Viridis8
+          
+              node_hover_tool = HoverTool(tooltips=[("ID", "@index"), ("#MailsReciv", "@degree") , ("Email", "@Email"), ("Job Title", "@Title")])
+          
+              p = figure(tooltips = [("ID", "@index"), ("#MailsReciv", "@degree") , ("Email", "@Email"), ("Job Title", "@Title")],
+                          tools="hover,box_zoom,reset,save,box_select,pan,wheel_zoom, tap", active_scroll='wheel_zoom',
+                          x_range=Range1d(-1, 1), y_range=Range1d(-1, 1))
+          
+          
+              p.title.text = "Graph for Sentiments between Reciever and Sender"
+          
+          
+          
+              graph_renderer = from_networkx(G, nx.kamada_kawai_layout, scale=1, center=(0, 0))
+          
+              graph_renderer.node_renderer.glyph = Circle(size=size_by_this_attribute, fill_color=color_by_this_attribute)
+          
+              graph_renderer.edge_renderer.glyph = MultiLine(line_color="edge_color", line_alpha=0.85, line_width=0.40 )
+              graph_renderer.edge_renderer.selection_glyph = MultiLine(line_color='yellow', line_width=2)
+          
+              graph_renderer.selection_policy = NodesAndLinkedEdges()
+          
+              p.renderers.append(graph_renderer)
+          
+            </code>
+        </pre>
+        </div>
+
+        <div id="SecondVisualisation" class="tabcontent">
+            <span onclick="this.parentElement.style.display='none'" class="topright">&times</span>
+            <pre>
+            <code class="language-python">
+              #libraries
+              from networkx.algorithms import community
+              from bokeh.models import BoxSelectTool
+              from bokeh.io import curdoc
+              from bokeh.resources import CDN, INLINE
+              from bokeh.themes import Theme
+              
+          
+              import math
+              import pandas as pd
+              import networkx as nx
+              import matplotlib.pyplot as plt
+              import seaborn as sns
+              import csv
+              import numpy as np
+              from bokeh.io import output_file, show
+              from bokeh.layouts import gridplot, column,row
+              from bokeh.plotting import figure, show
+              from bokeh.models import ColumnDataSource, Slider, GraphRenderer, Ellipse, MultiLine, Range1d
+              from bokeh.palettes import Spectral6, Spectral8, Viridis8
+              from bokeh.transform import factor_cmap
+              from scipy.interpolate import interp1d
+              from scipy.ndimage.filters import gaussian_filter1d
+              from scipy import stats
+              from bokeh.io import curdoc
+              from bokeh.models import (BoxZoomTool, Circle, HoverTool,
+                                      MultiLine, Plot, Range1d, ResetTool,TapTool,NodesAndLinkedEdges, BoxSelectTool,EdgesAndLinkedNodes, WheelZoomTool, ResetTool)
+              from bokeh.palettes import Spectral4, Paired8
+              from bokeh.plotting import from_networkx
+              from networkx.algorithms import community
+              from bokeh.io import output_notebook, show, save
+              from networkx.algorithms.community import greedy_modularity_communities
+              output_notebook()
+
+
+              #reading
+              df_enron = pd.read_csv("enron-v1.csv") 
+
+
+              #2nd vis
+              
+              df_enron.sort_values(by=['date'], inplace = True)
+              date = df_enron.groupby(df_enron['date']).count()
+              sentiment = df_enron.groupby(df_enron['date']).mean()
+              df_date = date.reset_index()
+              df_sentiment = sentiment.reset_index()
+              df_range= df_sentiment[['date']]
+              df_range['count'] = df_date['fromId']
+              df_range['senti'] = df_sentiment['sentiment']
+
+              ranges=df_range['date']
+
+              source = ColumnDataSource(df_range)
+              tool_list = 'box_select', 'reset', 'wheel_zoom', 'pan', 'hover','tap'
+
+              TOOLTIPS = [
+                  ("index", "$index"),
+                  ("Date", "@date"),
+                  ("Daily Count", "@count"),
+              ]
+
+              p1 = figure(x_range=ranges, plot_height=300, plot_width=700, toolbar_location='below', 
+                          title="Frequencey of messages by Date", tools=tool_list, 
+                          active_scroll='wheel_zoom', tooltips=TOOLTIPS)
+              p1.vbar(x='date', top='count', width=0.9, source=source)
+              p1.toolbar.autohide = True
+              p1.xaxis.visible = False
+
+              TOOLTIPS1 = [
+                  ("index", "$index"),
+                  ("Date", "@date"),
+                  ("Average Sentiment", "@senti"),
+              ]
+
+              p2 = figure(x_range=ranges, plot_height=300, plot_width=700, toolbar_location='below', 
+                          title=" Average Sentiment by Date", tools=tool_list, tooltips=TOOLTIPS1,
+                          active_scroll='wheel_zoom')
+              p2.vbar(x='date', top='senti', width=0.9, source=source, color="orange")
+              p2.toolbar.autohide = True
+              p2.xaxis.visible = False
+
+              p1.xgrid.grid_line_color = None
+              p1.y_range.start = 0
+              p1.y_range.end = 200
+              p2.xgrid.grid_line_color = None
+
+              plot_f = column(p1, p2)
+            </code>
+        </pre>
+        </div>
+
+    </div>
+
+ <footer>
+        <div>
+            <p class="foot-par">
+               <strong>GO TO</strong> 
+            </p>
+        </div>
+        <div>
+            <ul class="foot-list">
+        
+                <li><a href="/">HOME</a></li>
+                <li><a href="/example">EXAMPLE</a></li>
+                <li><a href="/sources">Top</a></li>
+            </ul>
+        </div>
+    </footer>
+</body>
+
+</html>
